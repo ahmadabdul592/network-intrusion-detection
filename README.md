@@ -27,27 +27,13 @@ For real data, put `KDDTrain+.txt` and `KDDTest+.txt` ([NSL-KDD](https://www.unb
 Attack names are mapped to DoS / Probe / R2L / U2R families automatically. With no files present, a synthetic generator with the same 41 features is used.
 
 ## Results
-> From the **synthetic** data (scikit-learn autoencoder). **Replace with your NSL-KDD results** and add `results/per_family_detection.png`.
 
 Detection rate per family at a ~5% false-alarm budget (R2L is unseen in training):
 
-| Model | DoS | Probe | R2L (novel) | False alarms |
-|---|---|---|---|---|
-| Self-training RF (2% labels) | 1.00 | 1.00 | 1.00 | 0.004 |
-| Supervised RF | 1.00 | 1.00 | 1.00 | 0.003 |
-| One-Class SVM | 1.00 | 1.00 | 1.00 | 0.053 |
-| Autoencoder (sklearn) | 1.00 | 1.00 | 0.67 | 0.049 |
-| Isolation Forest | 1.00 | 1.00 | 0.40 | 0.056 |
-| PCA reconstruction | 0.54 | 0.69 | 0.33 | 0.053 |
 
 **Honest reading of these numbers**
-- The synthetic R2L family is easy for tree models to separate, because its features fall outside the normal range. So this table mostly validates the *pipeline*. **The meaningful experiment is NSL-KDD**, where R2L and U2R are famously hard and `KDDTest+` contains attack types absent from `KDDTrain+`.
+. **The meaningful experiment is NSL-KDD**, where R2L and U2R are famously hard and `KDDTest+` contains attack types absent from `KDDTrain+`.
 - What to look for on real data: the supervised model's detection rate on the novel/rare families vs. the novelty detectors, and how much the 2%-label model closes the gap.
-
-## Limitations & next steps
-- Threshold calibration on normal-only validation data assumes the validation traffic is representative.
-- Add per-attack-type breakdown beyond the 4 families, SHAP for flagged flows, and a CICIDS2017 benchmark.
-- Evaluate concept drift: train on older traffic, test on newer.
 
 ## Layout
 ```
