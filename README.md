@@ -29,6 +29,51 @@ Attack names are mapped to DoS / Probe / R2L / U2R families automatically. With 
 ## Results
 
 Detection rate per family at a ~5% false-alarm budget (R2L is unseen in training):
+[data] NSL-KDD: train=125,973 test=22,544  known attacks=['dos', 'probe', 'r2l', 'u2r']  NOVEL in test=[]
+[done] Isolation Forest                   PR-AUC=0.961  ROC-AUC=0.951  dos=0.77  normal=0.02  probe=0.97  r2l=0.09  u2r=0.33
+[done] One-Class SVM                      PR-AUC=0.945  ROC-AUC=0.910  dos=0.91  normal=0.08  probe=0.94  r2l=0.44  u2r=0.76
+[done] PCA reconstruction                 PR-AUC=0.949  ROC-AUC=0.958  dos=0.83  normal=0.04  probe=0.69  r2l=0.32  u2r=0.63
+[done] Autoencoder (sklearn)              PR-AUC=0.959  ROC-AUC=0.960  dos=0.82  normal=0.04  probe=0.85  r2l=0.33  u2r=0.73
+[done] Self-training RF (2% labels)       PR-AUC=0.953  ROC-AUC=0.948  dos=0.99  normal=0.14  probe=1.00  r2l=0.86  u2r=0.66
+[done] Supervised RF (known attacks)      PR-AUC=0.964  ROC-AUC=0.962  dos=1.00  normal=0.13  probe=1.00  r2l=0.90  u2r=0.94
+[saved] C:\Users\ahmad\AppData\Local\Temp\pytest-of-ahmad\pytest-4\test_end_to_end0/metrics.csv, per_family.csv, metrics.md, per_family_detection.png
+============================================== warnings summary ==============================================
+..\..\AppData\Roaming\Python\Python313\site-packages\anyio\pytest_plugin.py:14
+  C:\Users\ahmad\AppData\Roaming\Python\Python313\site-packages\anyio\pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================================== short test summary info ===========================================
+FAILED tests/test_pipeline.py::test_end_to_end - assert False
+1 failed, 3 passed, 1 warning in 107.67s (0:01:47)       python -m netad.trainsers\ahmad\Downloads\network-intrusion-detection> 
+NSL-KDD: train=125,973 test=22,544  known attacks=['dos', 'probe', 'r2l', 'u2r']  NOVEL in test=[]
+Isolation Forest                   PR-AUC=0.961  ROC-AUC=0.951  dos=0.77  normal=0.02  probe=0.97  r2l=0.09  u2r=0.33
+One-Class SVM                      PR-AUC=0.945  ROC-AUC=0.910  dos=0.91  normal=0.08  probe=0.94  r2l=0.44  u2r=0.76
+PCA reconstruction                 PR-AUC=0.949  ROC-AUC=0.958  dos=0.83  normal=0.04  probe=0.69  r2l=0.32  u2r=0.63
+Autoencoder (PyTorch)              PR-AUC=0.951  ROC-AUC=0.958  dos=0.85  normal=0.04  probe=0.78  r2l=0.35  u2r=0.69
+Self-training RF (2% labels)       PR-AUC=0.953  ROC-AUC=0.948  dos=0.99  normal=0.14  probe=1.00  r2l=0.86  u2r=0.66
+Supervised RF (known attacks)      PR-AUC=0.964  ROC-AUC=0.962  dos=1.00  normal=0.13  probe=1.00  r2l=0.90  u2r=0.94
+
+| model | regime | pr_auc | roc_auc | fit_s |
+|---|---|---|---|---|
+| Supervised RF (known attacks) | C: fully supervised | 0.964 | 0.962 | 14.560 |
+| Isolation Forest | A: normal-only novelty | 0.961 | 0.951 | 1.877 |
+| Self-training RF (2% labels) | B: few-label self-training | 0.953 | 0.948 | 91.487 |
+| Autoencoder (PyTorch) | A: normal-only novelty | 0.951 | 0.958 | 19.426 |
+| PCA reconstruction | A: normal-only novelty | 0.949 | 0.958 | 0.737 |
+| One-Class SVM | A: normal-only novelty | 0.945 | 0.910 | 1.764 |
+
+| model | dos | false_alarm_rate | probe | r2l | u2r |
+|---|---|---|---|---|---|
+| Supervised RF (known attacks) | 0.998 | 0.131 | 1.000 | 0.902 | 0.940 |
+| Isolation Forest | 0.769 | 0.025 | 0.969 | 0.085 | 0.328 |
+| Self-training RF (2% labels) | 0.989 | 0.142 | 0.999 | 0.858 | 0.657 |
+| Autoencoder (PyTorch) | 0.848 | 0.042 | 0.779 | 0.347 | 0.687 |
+| PCA reconstruction | 0.828 | 0.035 | 0.693 | 0.321 | 0.627 |
+| One-Class SVM | 0.912 | 0.077 | 0.939 | 0.441 | 0.761 |
 
 
 **Honest reading of these numbers**
