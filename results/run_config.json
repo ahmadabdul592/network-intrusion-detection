@@ -1,0 +1,14 @@
+{
+  "source": "NSL-KDD",
+  "backend": "auto",
+  "seed": 42,
+  "label_fraction": 0.02,
+  "fpr_budget": 0.05,
+  "known_attacks": [
+    "dos",
+    "probe",
+    "r2l",
+    "u2r"
+  ],
+  "novel_attacks": []
+}
